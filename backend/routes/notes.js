@@ -52,11 +52,30 @@ router.put('/updatenote/:id', fetchuser, async (req, res) => {
 
         note = await Note.findByIdAndUpdate(req.params.id,{$set:updatednote},{new:true});
 
-        res.json(note);
+        res.json({note});
     }
     catch(error) {
         res.status(500).send(error);
     }
 })
+
+router.put('/deletenote/:id', fetchuser, async (req, res) => {
+    try {
+
+        let note = await Note.findById(req.params.id);
+        if(!note){ return res.status(404).send('Not found')}
+        if(note.user.toString()!==req.user.id){
+            return res.status(401).send("you don't have permission to modify")
+        }
+
+        note = await Note.findByIdAndDelete(req.params.id);
+
+        res.status(200).send(note.title+'has been deleted');
+    }
+    catch(error) {
+        res.status(500).send(error);
+    }
+})
+
 
 module.exports = router

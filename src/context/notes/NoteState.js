@@ -3,51 +3,23 @@ import NoteContext from "./NoteContext";
 
 const NoteState = (props) => {
 
-  const n = [
-    {
-      "_id": "6208d7afb9471f1d7d837d89",
-      "user": "61ffa37b3fb039d6c1ef2185",
-      "title": "hhhhhhh",
-      "description": "hello world",
-      "tag": "general",
-      "__v": 0
-    },
-    {
-      "_id": "6208d7b8b9471f1d7d837d8e",
-      "user": "61ffa37b3fb039d6c1ef2185",
-      "title": "hhhhhhh",
-      "description": "hello world",
-      "tag": "general",
-      "__v": 0
-    },
-    {
-      "_id": "6208d7c5b9471f1d7d837d92",
-      "user": "61ffa37b3fb039d6c1ef2185",
-      "title": "hhhhhhh",
-      "description": "hello world",
-      "tag": "general",
-      "__v": 0
-    },
-    {
-      "_id": "6208d7ccb9471f1d7d837d94",
-      "user": "61ffa37b3fb039d6c1ef2185",
-      "title": "hhhhhsdfghh",
-      "description": "hello world",
-      "tag": "general",
-      "__v": 0
-    },
-    {
-      "_id": "6208d7cdb9471f1d7d837d96",
-      "user": "61ffa37b3fb039d6c1ef2185",
-      "title": "hhhhhsdfghh",
-      "description": "hello world",
-      "tag": "general",
-      "__v": 0
-    }
-  ]
+  const n = []
 
   const [notes, setnotes] = useState(n);
 
+  const fetchallnotes = async() =>{
+    const response = await fetch("http://localhost:4000/api/notes/fetchallnotes", {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'auth-token': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjFmZmEzN2IzZmIwMzlkNmMxZWYyMTg1In0sImlhdCI6MTY0NDE0MzQ4M30.S14ujB8prpCtNkINvsGMS7H5xK9IMudP-mietHgbUSo"
+      },
+    });
+    const r = await response.json();
+    console.log(r);
+    setnotes(r);
+  }
+  
   const addnote = (title, desc, tag) => {
     console.log(`working , Working${title}`);
     const note = {
@@ -78,7 +50,7 @@ const NoteState = (props) => {
   }
 
   return (
-    <NoteContext.Provider value={{ notes, addnote, deletenote }}>
+    <NoteContext.Provider value={{ notes, addnote, deletenote, fetchallnotes }}>
       {props.children};
     </NoteContext.Provider>
   )

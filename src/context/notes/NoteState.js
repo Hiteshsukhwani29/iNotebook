@@ -61,11 +61,12 @@ const NoteState = (props) => {
       }
 
       const deletenote=(id)=>{
-        setnotes(notes);
+        const s=notes.filter((note)=>{return note._id!==id});
+        setnotes(s);
       }
 
     return (
-        <NoteContext.Provider value={{notes,addnote}}>
+        <NoteContext.Provider value={{notes,addnote,deletenote}}>
             {props.children};
         </NoteContext.Provider>
     )

@@ -17,7 +17,7 @@ function Notes() {
                 <h2>Your Notes</h2>
                 <div className='row'>
                     {notes.map((note) => {
-                        return <NoteItem key={note._id} title={note.title} description={note.description} />
+                        return <NoteItem key={note._id} id={note._id} title={note.title} description={note.description} />
                     })}
                 </div>
             </div>

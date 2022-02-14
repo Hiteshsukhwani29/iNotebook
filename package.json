@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/icons": "^4.11.2",
     "concurrently": "^7.0.0",
     "cra-template": "1.1.2",
     "express-validator": "^6.13.0",

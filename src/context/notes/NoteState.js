@@ -27,7 +27,7 @@ const NoteState = (props) => {
         'Content-Type': 'application/json',
         'auth-token': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjFmZmEzN2IzZmIwMzlkNmMxZWYyMTg1In0sImlhdCI6MTY0NDE0MzQ4M30.S14ujB8prpCtNkINvsGMS7H5xK9IMudP-mietHgbUSo"
       },
-      body: JSON.stringify({title,description:desc,tag:"general"})
+      body: JSON.stringify({title,description:desc,tag:tag})
     });
     const r = await response.json();
     setnotes(notes.concat(r));
@@ -47,20 +47,33 @@ const NoteState = (props) => {
     setnotes(s);
   }
 
-  const editnote = (id, title, desc, tag) => {
-    for (let i = 0; i < notes.length; i++) {
-      const e = notes[i];
+  const editnote = async(id, title, desc, tag) => {
+    const response = await fetch(`http://localhost:4000/api/notes/updatenote/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'auth-token': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjFmZmEzN2IzZmIwMzlkNmMxZWYyMTg1In0sImlhdCI6MTY0NDE0MzQ4M30.S14ujB8prpCtNkINvsGMS7H5xK9IMudP-mietHgbUSo"
+      },
+      body: JSON.stringify({title,description:desc,tag:tag})
+    });
+    const r = await response.json();
+
+    let nn = JSON.parse(JSON.stringify(notes));
+
+    for (let i = 0; i < nn.length; i++) {
+      const e = nn[i];
       if (e._id === id) {
         e.title = title;
         e.description = desc;
         e.tag = tag;
+        break;
       }
-
+      setnotes(nn)
     }
   }
 
   return (
-    <NoteContext.Provider value={{ notes, addnote, deletenote, fetchallnotes }}>
+    <NoteContext.Provider value={{ notes, addnote, deletenote, fetchallnotes,editnote }}>
       {props.children};
     </NoteContext.Provider>
   )

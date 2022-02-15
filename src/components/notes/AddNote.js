@@ -30,6 +30,10 @@ function AddNote() {
                     <label className="form-label">Description</label>
                     <textarea type="text" className="form-control text-wrap" style={{height:"150px"}} onChange={onchange} name="desc" />
                 </div>
+                <div className="mb-3">
+                    <label className="form-label">Tag</label>
+                    <input type="text" className="form-control" onChange={onchange} name="tag"/>
+                </div>
                 <button type="submit" className="btn btn-primary" onClick={savenote}>Save</button>
             </form>
         </div>

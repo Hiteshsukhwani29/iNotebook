@@ -21,7 +21,7 @@ function Notes() {
             <div className='container'>
                 <h2>Your Notes</h2>
                 <div className='row'>
-                    {notes.map((note) => {
+                    {notes?.map((note) => {
                         return <NoteItem key={note._id} id={note._id} title={note.title} description={note.description} />
                     })}
                 </div>

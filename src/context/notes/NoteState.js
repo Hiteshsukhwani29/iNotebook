@@ -7,7 +7,7 @@ const NoteState = (props) => {
 
   const [notes, setnotes] = useState(n);
 
-  const fetchallnotes = async() =>{
+  const fetchallnotes = async () => {
     const response = await fetch("http://localhost:4000/api/notes/fetchallnotes", {
       method: 'GET',
       headers: {
@@ -17,9 +17,9 @@ const NoteState = (props) => {
     });
     const r = await response.json();
     console.log(r);
-    setnotes(r);
+    setnotes(r[0]);
   }
-  
+
   const addnote = (title, desc, tag) => {
     console.log(`working , Working${title}`);
     const note = {
@@ -32,7 +32,16 @@ const NoteState = (props) => {
     setnotes(notes.concat(note));
   }
 
-  const deletenote = (id) => {
+  const deletenote = async (id) => {
+    const response = await fetch(`http://localhost:4000/api/notes/deletenote/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'auth-token': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjFmZmEzN2IzZmIwMzlkNmMxZWYyMTg1In0sImlhdCI6MTY0NDE0MzQ4M30.S14ujB8prpCtNkINvsGMS7H5xK9IMudP-mietHgbUSo"
+      }
+    }).then((response) => console.log(response.json()));
+    setnotes(response);
     const s = notes.filter((note) => { return note._id !== id });
     setnotes(s);
   }

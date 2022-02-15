@@ -20,16 +20,17 @@ const NoteState = (props) => {
     setnotes(r[0]);
   }
 
-  const addnote = (title, desc, tag) => {
-    console.log(`working , Working${title}`);
-    const note = {
-      "_id": "6208d7cdb94213e2r4537d96",
-      "user": "61ffa37b3fb056781ef2185",
-      "title": title,
-      "description": desc,
-      "tag": tag
-    }
-    setnotes(notes.concat(note));
+  const addnote = async(title, desc, tag) => {
+    const response = await fetch("http://localhost:4000/api/notes/addnote", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'auth-token': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjFmZmEzN2IzZmIwMzlkNmMxZWYyMTg1In0sImlhdCI6MTY0NDE0MzQ4M30.S14ujB8prpCtNkINvsGMS7H5xK9IMudP-mietHgbUSo"
+      },
+      body: JSON.stringify({title,description:desc,tag:"general"})
+    });
+    const r = await response.json();
+    setnotes(notes.concat(r));
   }
 
   const deletenote = async (id) => {

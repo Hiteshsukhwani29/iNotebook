@@ -70,7 +70,7 @@ router.put('/deletenote/:id', fetchuser, async (req, res) => {
 
         note = await Note.findByIdAndDelete(req.params.id);
 
-        res.status(200).send(note.title+'has been deleted');
+        res.status(200).json({note:note});
     }
     catch(error) {
         res.status(500).send(error);
